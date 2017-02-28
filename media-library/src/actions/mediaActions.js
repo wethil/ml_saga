@@ -14,3 +14,9 @@ export const searchMediaAction = (payload) => ({
     type : types.SEARCH_MEDIA_REQUEST,
     payload
 });
+
+export const selectYoutubeVideoAction = (youtubeVideo) => ({
+    type : types.SELECTED_YOUTUBE_VIDEO,
+    youtubeVideo
+})
+

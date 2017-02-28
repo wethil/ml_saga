@@ -1,6 +1,7 @@
 const FLICKR_API_KEY = 'a46a979f39c49975dbdd23b378e6d3d5';
 const SHUTTER_CLIENT_ID = '3434a56d8702085b9226';
 const SHUTTER_CLIENT_SECRET = '7698001661a2b347c2017dfd50aebb2519eda578';
+const YOUTUBE_API_KEY= 'AIzaSyCRpfCBvdHWOvOKlCQwi2UiUaFTgKov2g4';
 
 // Basic Authentication for accessing Shutterstock API
 const basicAuth = () => 'Basic '.concat(window.btoa(`${SHUTTER_CLIENT_ID}:${SHUTTER_CLIENT_SECRET}`));
@@ -52,3 +53,20 @@ export const flickrImages = (searchQuery) => {
       }));
     });
 };
+
+
+export const youtubeVideos = (searchQuery) => {
+  const YOUTUBE_API_ENDPOINT = `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${YOUTUBE_API_KEY}&type=video&maxResults=50&q=${searchQuery}` 
+  return fetch(YOUTUBE_API_ENDPOINT)
+    .then(response=>{
+      return response.json()
+    })
+   .then(json => {
+     console.log(json)
+      return json.items.map(({id, snippet }) => ({
+        id:id.videoId,
+        title:snippet.title,
+        mediaUrl:snippet.thumbnails.high.url
+      }));
+    });
+}
